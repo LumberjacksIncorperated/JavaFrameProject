@@ -1,25 +1,51 @@
+//-----------------------------------------------------------------------------------------------------------------------
+//
+// PROJECT
+// -------
+// "Java Frame Project"
+//
+// AUTHOR
+// ------
+// Lumberjacks Incorperated (2018)
+//
+//-----------------------------------------------------------------------------------------------------------------------
+
+//-----------------------------------------------------------------------------------------------------------------------
+// IMPORTS
+//-----------------------------------------------------------------------------------------------------------------------
 import java.awt.*;
 
 public class BrushStroke {
-	private Colour colour;
-	private int x, y, radius;
+	
+	private Colour strokeColour;
+	private int xPosition;
+	private int yPosition;
+	private int strokeRadius;
+
+	private BrushStroke(Colour colour, int radius, int xPosition, int yPosition) {
+		this.strokeColour = colour;
+		this.strokeRadius = radius;
+		this.xPosition = xPosition;
+		this.yPosition = yPosition;
+	}
 
 	public void paintThisStrokeUponMyGraphics(Graphics graphics) {
-		System.out.println("paint stuff here");
-		graphics.setColor(colour.toColor());
-		graphics.fillOval(x-radius, y-radius, radius*2, radius*2);
+		Color strokeColorOnGraphics = this.strokeColour.toColor();
+		graphics.setColor(strokeColorOnGraphics);
+		drawSelfOnGraphics(graphics);
 	}
-	
-	private BrushStroke() {}
 
-	public static BrushStroke strokeCircleWithColourRadiusXAndY(Colour colour, double radius, double x, double y) {
-		BrushStroke strokeOfACirlce = new BrushStroke();
-System.out.println("brush stroke here");
-		strokeOfACirlce.colour = colour;
-		strokeOfACirlce.radius = (int)radius;
-		strokeOfACirlce.x = (int)x;
-		strokeOfACirlce.y = (int)y;
+	private int RADIUS_TO_WIDTH_FACTOR = 2;
+	private void drawSelfOnGraphics(Graphics graphics) {
+		int leftMostPosition = xPosition-strokeRadius;
+		int rightMostPosition = yPosition-strokeRadius;
+		int cirleWidth = strokeRadius*RADIUS_TO_WIDTH_FACTOR;
+		int circleHeight = strokeRadius*RADIUS_TO_WIDTH_FACTOR;
+		graphics.fillOval(leftMostPosition, rightMostPosition, cirleWidth, circleHeight);
+	}
 
+	public static BrushStroke strokeCircleWithColourRadiusXAndY(Colour colour, double radius, double xPosition, double yPosition) {
+		BrushStroke strokeOfACirlce = new BrushStroke(colour, (int) radius, (int) xPosition, (int) yPosition);
 		return strokeOfACirlce;
 	}
 }

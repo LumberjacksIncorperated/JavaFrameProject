@@ -19,14 +19,11 @@ main()
 {
     echo "<START>"
     
-    echo "Enter compilation starting directory"
-    enterCompilationStartingDirectory
+    echo "Updating Local Git"
+    udpateLocalGit
     
-    echo "Compile java files"
-    compileJavaFiles
-    
-    echo "Cleanup Project"
-    putClassFilesInClassFileDirectory
+    echo "Updating Remote Git"
+    updateRemoteGit
     
     echo "<DONE>"
 }
@@ -34,21 +31,17 @@ main()
 #----------------------------------------------------------------------------------------------------------------------
 # INTERNAL FUNCTIONS
 #----------------------------------------------------------------------------------------------------------------------
-function enterCompilationStartingDirectory()
+function udpateLocalGit()
 {
-    cd ../java_files/
+    cd ../
+    git add --all
+    git commit -m "."
 }
 
-function compileJavaFiles()
+function updateRemoteGit()
 {
-	javac DrawingApplication.java
+    git push origin master
 }
-
-function putClassFilesInClassFileDirectory()
-{
-    mv ./*.class ../class_files
-}
-
 
 #----------------------------------------------------------------------------------------------------------------------
 # SCRIPT

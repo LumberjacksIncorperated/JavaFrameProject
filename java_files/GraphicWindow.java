@@ -1,3 +1,18 @@
+//-----------------------------------------------------------------------------------------------------------------------
+//
+// PROJECT
+// -------
+// "Java Frame Project"
+//
+// AUTHOR
+// ------
+// Lumberjacks Incorperated (2018)
+//
+//-----------------------------------------------------------------------------------------------------------------------
+
+//-----------------------------------------------------------------------------------------------------------------------
+// IMPORTS
+//-----------------------------------------------------------------------------------------------------------------------
 import java.awt.*;
 import javax.swing.*;
 import java.util.*;
@@ -9,11 +24,7 @@ public class GraphicWindow extends JFrame {
 	public GraphicWindow() {
 		super("Graphic Window");
 		this.canvasPane = new GraphicWindowCanvas();
- 		this.setWindowConfigurationWithGraphicWindowCanvas(this.canvasPane); 
-    }
-
-    public Canvas getThisWindowsCanvas() {
-        return this.canvasPane;
+ 		setWindowConfigurationWithGraphicWindowCanvas(this.canvasPane); 
     }
 
 	private final int WINDOW_WIDTH = 400;
@@ -25,34 +36,7 @@ public class GraphicWindow extends JFrame {
         this.setVisible(true);
     }
 
-    //create a component that you can actually draw on.
-    class GraphicWindowCanvas extends JPanel implements Canvas {
-     	private ArrayList<BrushStroke> brushStrokes = new ArrayList<BrushStroke>();
-
-     	public GraphicWindowCanvas() {}
-
-     	public void drawBrushStroke(BrushStroke brushStroke) {
-     		brushStrokes.add(brushStroke);
-     		this.askNicelyForThisJPanelToRepaintPlease();
-     	}
-
- 		public void clearCanvasOfAllPaintAndDaves() {
- 			brushStrokes = new ArrayList<BrushStroke>();
- 			this.askNicelyForThisJPanelToRepaintPlease();
- 		}
-
- 		private void askNicelyForThisJPanelToRepaintPlease() {
- 			System.out.println("Gods Be Merciful");
- 			this.repaint();
- 		}
-
-        public void paintComponent(Graphics graphics) {
-            System.out.println("paint here loop");
-            for (BrushStroke brushStroke : this.brushStrokes) {
-            	brushStroke.paintThisStrokeUponMyGraphics(graphics);
-            }
-        }
+    public Canvas getThisWindowsCanvas() {
+        return this.canvasPane;
     }
 }
-
-
