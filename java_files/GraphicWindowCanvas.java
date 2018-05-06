@@ -18,7 +18,10 @@ import javax.swing.*;
 import java.util.*;
 
 class GraphicWindowCanvas extends JPanel implements Canvas {
-    
+
+    //-----------------------------------------------------------------------------------------------------------------------
+    // FUNCTIONAL CODE
+    //-----------------------------------------------------------------------------------------------------------------------
     private ArrayList<BrushStroke> brushStrokes;
 
     public GraphicWindowCanvas() {
@@ -41,8 +44,21 @@ class GraphicWindowCanvas extends JPanel implements Canvas {
  	}
 
     public void paintComponent(Graphics graphics) {
+        graphics.clear();
         for (BrushStroke brushStroke : this.brushStrokes) {
             brushStroke.paintThisStrokeUponMyGraphics(graphics);
         }
     }
+
+    //-----------------------------------------------------------------------------------------------------------------------
+    // TESTING CODE
+    //-----------------------------------------------------------------------------------------------------------------------
+    public static void main(String[] args) {
+        runTests();
+    }
+
+    private static void runTests() {
+    }
 }
+
+
