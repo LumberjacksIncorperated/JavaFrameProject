@@ -14,9 +14,20 @@
 // IMPORTS
 //-----------------------------------------------------------------------------------------------------------------------
 // <none>
- 
+
 public interface Canvas {
 
  	public void drawBrushStrokeOnCanvas(BrushStroke brushStroke);
  	public void clearCanvasOfAllPaintAndDaves();
- }
+
+ 	//-----------------------------------------------------------------------------------------------------------------------
+    // TESTING CODE
+    //-----------------------------------------------------------------------------------------------------------------------
+    public static void main(String[] args) {
+        runTests();
+    }
+
+    public static void runTests() {
+    	System.out.println("No Testing For Interface");
+    }
+}

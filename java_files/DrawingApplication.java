@@ -14,9 +14,28 @@
 // IMPORTS
 //-----------------------------------------------------------------------------------------------------------------------
 import java.util.Scanner;
+import wrapped_classes.*;
+
+// Chain Testing Framework
+import chain_testing.*;
 
 public class DrawingApplication {
 
+	//-----------------------------------------------------------------------------------------------------------------------
+    // MAIN
+    //-----------------------------------------------------------------------------------------------------------------------
+    public static void main(String args[]){
+        DrawingApplication newDrawingApplication = new DrawingApplication();
+        if(args.length > 0 && args[0] != null && args[0].equals("-test")) {
+            newDrawingApplication.runTests();
+        } else {
+            newDrawingApplication.runApplication();
+        }
+    }
+
+    //-----------------------------------------------------------------------------------------------------------------------
+    // FUNCTIONAL CODE
+    //-----------------------------------------------------------------------------------------------------------------------
     private Scanner commandLineInputReader = new Scanner(System.in);
     private Canvas graphicWindowCanvas;
     private Painter daveThePainter;
@@ -66,8 +85,10 @@ public class DrawingApplication {
 		this.daveThePainter.orderDaveToDoAThingWithPaintOnTheCanvasWeJustGaveHim(drawingCommand);
 	}
 
-	public static void main(String[] args) {
-		DrawingApplication newDrawingApplication = new DrawingApplication();
-		newDrawingApplication.runApplication();
-	}
+    //-----------------------------------------------------------------------------------------------------------------------
+    // TESTING CODE
+    //-----------------------------------------------------------------------------------------------------------------------
+    private static void runTests() {
+    	System.out.println("No Testing For Application Class");
+    }
 }

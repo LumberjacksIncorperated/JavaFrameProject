@@ -16,8 +16,12 @@
 import java.awt.*;
 import javax.swing.*;
 import java.util.*;
+import wrapped_classes.*;
 
-public class BrushStroke {
+// Chain Testing Framework
+import chain_testing.*;
+
+public class BrushStroke extends BaseObject {
 	
     //-----------------------------------------------------------------------------------------------------------------------
     // FUNCTIONAL CODE
@@ -28,6 +32,13 @@ public class BrushStroke {
 	private int strokeRadius;
 
 	private BrushStroke(Colour colour, int radius, int xPosition, int yPosition) {
+		this.monitorMethodCallWithNameAndObjects("BrushStroke()", new BaseObject[] {
+			new ObjectDescription(colour.asString()),
+			ObjectDescription.descriptionOfInt(radius),
+			ObjectDescription.descriptionOfInt(xPosition),
+			ObjectDescription.descriptionOfInt(yPosition)
+		});
+
 		this.strokeColour = colour;
 		this.strokeRadius = radius;
 		this.xPosition = xPosition;
@@ -35,17 +46,25 @@ public class BrushStroke {
 	}
 
 	public void paintThisStrokeUponMyGraphics(Grafix graphics) {
-		graphics.setColour(this.strokeColour);
+		this.monitorMethodCallWithNameAndObjects("paintThisStrokeUponMyGraphics()", new BaseObject[] {
+			ObjectDescription.descriptionOfInt(0)
+		});
+		Color strokeColourToDraw = this.strokeColour.toColor();
+		graphics.setColour(strokeColourToDraw);
 		drawSelfOnGraphics(graphics);
 	}
 
 	private static final int RADIUS_TO_WIDTH_FACTOR = 2;
 	private void drawSelfOnGraphics(Grafix graphics) {
+		this.monitorMethodCallWithNameAndObjects("drawSelfOnGraphics()", new BaseObject[] {
+			ObjectDescription.descriptionOfInt(0)
+		});
+
 		int leftMostPosition = xPosition-strokeRadius;
-		int rightMostPosition = yPosition-strokeRadius;
+		int topMostPosition = yPosition-strokeRadius;
 		int cirleWidth = strokeRadius*BrushStroke.RADIUS_TO_WIDTH_FACTOR;
 		int circleHeight = strokeRadius*BrushStroke.RADIUS_TO_WIDTH_FACTOR;
-		graphics.fillOval(leftMostPosition, rightMostPosition, cirleWidth, circleHeight);
+		graphics.fillOval(leftMostPosition, topMostPosition, cirleWidth, circleHeight);
 	}
 
 	public static BrushStroke strokeCircleWithColourRadiusXAndY(Colour colour, double radius, double xPosition, double yPosition) {
@@ -71,14 +90,30 @@ public class BrushStroke {
     }
 
     private static void runTests() {
+    	publicConstructionTest();
     	brushStrokeCirlceTest();
+    }
+
+    private static void publicConstructionTest() {
+
+    	MonitorAssistant.compareNonThreadedMonitoredCallsWithCallbackAndTestDescription(new MonitorAssistantDelegate() {
+    		
+    		public void executeTestCalls() {
+				BrushStroke testStroke = strokeCircleWithColourRadiusXAndY(TEST_COLOR, TEST_RADIUS, TEST_X_POSITION, TEST_Y_POSITION);
+    		}
+
+    		public void executeExpectedCalls() {
+    			BrushStroke brushStoke = new BrushStroke(TEST_COLOR, TEST_RADIUS, TEST_X_POSITION, TEST_Y_POSITION);
+    		}
+
+    	}, "Brush Stroke Public Construction");
     }
 
     private static void brushStrokeCirlceTest() {
 
     	MonitorAssistant.compareNonThreadedMonitoredCallsWithCallbackAndTestDescription(new MonitorAssistantDelegate() {
     		
-    		public void executeTestProgram() {
+    		public void executeTestCalls() {
 				Grafix fakeGrafix = Grafix.facadeGrafixObject();
 				BrushStroke testStroke = strokeCircleWithColourRadiusXAndY(TEST_COLOR, TEST_RADIUS, TEST_X_POSITION, TEST_Y_POSITION);
 				testStroke.paintThisStrokeUponMyGraphics(fakeGrafix);
@@ -86,10 +121,10 @@ public class BrushStroke {
 
     		public void executeExpectedCalls() {
     			Grafix fakeGrafix = Grafix.facadeGrafixObject();
-				fakeGrafix.setColour(TEST_COLOR);
+				fakeGrafix.setColour(TEST_COLOR.toColor());
 				fakeGrafix.fillOval(TEST_LEFTMOST_POSITION, TEST_RIGHTMOST_POSITION, TEST_CIRCLE_WIDTH, TEST_CIRCLE_HEIGHT);
     		}
 
-    	}, "Brush stroke");
+    	}, "Brush Stroke Painting");
     }
 }

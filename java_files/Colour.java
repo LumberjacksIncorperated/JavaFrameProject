@@ -15,6 +15,9 @@
 //-----------------------------------------------------------------------------------------------------------------------
 import java.awt.*;
 
+// Chain Testing Framework
+import chain_testing.*;
+
 public class Colour extends BaseObject {
 
 	//-----------------------------------------------------------------------------------------------------------------------
@@ -26,11 +29,31 @@ public class Colour extends BaseObject {
 
 	private Color color;
 
+	public String asString() {
+		String colorString;
+		if(this.color == Color.red) {
+			colorString =  "RED";
+		} else 
+		if(this.color == Color.blue) {
+			colorString =  "BLUE";
+		} else 
+		if(this.color == Color.green) {
+			colorString =  "GREEN";
+		} else {
+			colorString =  "NOT A COLOUR";
+		}
+		return colorString;
+	}
+
 	public String getStringDescriptionOfMonitoredInformation() {
 		return "[is a trash dave colour]";
 	}
 
 	private Colour(int colourSpecification) {
+		this.monitorMethodCallWithNameAndObjects("Colour()", new BaseObject[] {
+			ObjectDescription.descriptionOfInt(colourSpecification),
+		});
+
 		if(colourSpecification == Colour.RED_COLOUR) {
 			this.color = Color.red;
 		} else
@@ -48,22 +71,37 @@ public class Colour extends BaseObject {
 	}
 
 	public Color toColor() {
+		this.monitorMethodCallWithNameAndObjects("toColor()", new BaseObject[] {
+			ObjectDescription.descriptionOfInt(0),
+		});
+
 		return this.color;
 	}
-
-	//-----------------------------------------------------------------------------------------------------------------------
+    //-----------------------------------------------------------------------------------------------------------------------
     // TESTING CODE
     //-----------------------------------------------------------------------------------------------------------------------
+    private static int TEST_COLOR = Colour.RED_COLOUR;
+
     public static void main(String[] args) {
         runTests();
     }
 
     private static void runTests() {
-        davesColourTest();
+    	daveColourTest();
     }
-    
-    private static void davesColourTest() {
-        Colour daveColour = Colour.davesColour();
-    	assert(daveColour.toColor() == Color.red);
+
+    private static void daveColourTest() {
+
+    	MonitorAssistant.compareNonThreadedMonitoredCallsWithCallbackAndTestDescription(new MonitorAssistantDelegate() {
+    		
+    		public void executeTestCalls() {
+				Colour newColour = Colour.davesColour();
+    		}
+
+    		public void executeExpectedCalls() {
+    			Colour newColour = new Colour(TEST_COLOR);
+    		}
+
+    	}, "Daves Colour");
     }
 }

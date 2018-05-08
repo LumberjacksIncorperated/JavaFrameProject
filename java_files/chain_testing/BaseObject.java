@@ -1,13 +1,40 @@
+//-----------------------------------------------------------------------------------------------------------------------
+//
+// PROJECT
+// -------
+// "Chain Testing Project"
+//
+// AUTHOR
+// ------
+// Lumberjacks Incorperated (2018)
+//
+//-----------------------------------------------------------------------------------------------------------------------
+
+//-----------------------------------------------------------------------------------------------------------------------
+// Testing Package
+//-----------------------------------------------------------------------------------------------------------------------
+package chain_testing;
+
+//-----------------------------------------------------------------------------------------------------------------------
+// IMPORTS
+//-----------------------------------------------------------------------------------------------------------------------
+import java.awt.*;
 import java.util.*;
 
 public class BaseObject {
 
-	private final boolean ALWAYS_FAIL = false;
+    //-----------------------------------------------------------------------------------------------------------------------
+    // FUNCTIONAL CODE
+    //-----------------------------------------------------------------------------------------------------------------------
 	public String getStringDescriptionOfMonitoredInformation() {
-		System.out.println("This Object has not implemented getStringDescriptionOfMonitoredInformation");
-		System.exit(0);
+		exitWithErrorUntilOverwritten();
 		return null;
 	} 
+
+	private void exitWithErrorUntilOverwritten() {
+		System.out.println("This Object has not implemented getStringDescriptionOfMonitoredInformation");
+		System.exit(0);
+	}
 
 	public void monitorMethodCallWithNameAndObjects(String methodCallIdentifier, BaseObject[] methodCallParameters) {
 		Monitor currentGlobalMonitor = Monitor.getCurrentGlobalMonitor();
